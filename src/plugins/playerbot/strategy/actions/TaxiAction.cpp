@@ -27,7 +27,7 @@ bool TaxiAction::Execute(Event event)
 				if (ai->GetBot()->GetMotionMaster()->GetCurrentMovementGeneratorType() == FLIGHT_MOTION_TYPE)
 				{
 					// short preparations to continue flight
-					FlightPathMovementGenerator* flight = (FlightPathMovementGenerator*)(ai->GetBot()->GetMotionMaster()->top());
+					FlightPathMovementGenerator* flight = (FlightPathMovementGenerator*)(ai->GetBot()->GetMotionMaster()->GetCurrentMovementGenerator());
 
 					flight->SetCurrentNodeAfterTeleport();
 					TaxiPathNodeEntry const* node = flight->GetPath()[flight->GetCurrentNode()];
