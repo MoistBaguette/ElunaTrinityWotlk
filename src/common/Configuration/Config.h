@@ -25,11 +25,6 @@
 
 class TC_COMMON_API ConfigMgr
 {
-    ConfigMgr() = default;
-    ConfigMgr(ConfigMgr const&) = delete;
-    ConfigMgr& operator=(ConfigMgr const&) = delete;
-    ~ConfigMgr() = default;
-
 public:
     /// Method used only for loading main configuration files (authserver.conf and worldserver.conf)
     bool LoadInitial(std::string const& file, std::vector<std::string> args, std::string& error);
@@ -50,6 +45,12 @@ public:
 private:
     template<class T>
     T GetValueDefault(std::string const& name, T def) const;
+// playerbot mod
+public:
+    ConfigMgr() = default;
+    ConfigMgr(ConfigMgr const&) = delete;
+    ConfigMgr& operator=(ConfigMgr const&) = delete;
+    ~ConfigMgr() = default;
 };
 
 #define sConfigMgr ConfigMgr::instance()

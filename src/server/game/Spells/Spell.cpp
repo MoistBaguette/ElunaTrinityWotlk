@@ -5850,7 +5850,7 @@ SpellCastResult Spell::CheckCast(bool strict, uint32* param1 /*= nullptr*/, uint
 
                 if (unitCaster->IsInWater() && m_spellInfo->HasAura(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED))
                     return SPELL_FAILED_ONLY_ABOVEWATER;
-
+                /*
                 // Ignore map check if spell have AreaId. AreaId already checked and this prevent special mount spells
                 bool allowMount = !unitCaster->GetMap()->IsDungeon() || unitCaster->GetMap()->IsBattlegroundOrArena();
                 InstanceTemplate const* it = sObjectMgr->GetInstanceTemplate(unitCaster->GetMapId());
@@ -5861,6 +5861,7 @@ SpellCastResult Spell::CheckCast(bool strict, uint32* param1 /*= nullptr*/, uint
 
                 if (unitCaster->IsInDisallowedMountForm())
                     return SPELL_FAILED_NOT_SHAPESHIFT;
+                */
                 break;
             }
             case SPELL_AURA_RANGED_ATTACK_POWER_ATTACKER_BONUS:

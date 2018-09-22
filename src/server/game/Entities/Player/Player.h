@@ -79,6 +79,10 @@ enum ItemClass : uint8;
 enum LootError : uint8;
 enum LootType : uint8;
 
+// Playerbot mod
+class PlayerbotAI;
+class PlayerbotMgr;
+
 typedef std::deque<Mail*> PlayerMails;
 
 #define PLAYER_MAX_SKILLS           127
@@ -2148,6 +2152,17 @@ class TC_GAME_API Player : public Unit, public GridObject<Player>
         bool SetHover(bool enable, bool packetOnly = false) override;
 
         bool CanFly() const override { return m_movementInfo.HasMovementFlag(MOVEMENTFLAG_CAN_FLY); }
+        // Playerbot mod:
+        // A Player can either have a playerbotMgr (to manage its bots), or have playerbotAI (if it is a bot), or
+        // neither. Code that enables bots must create the playerbotMgr and set it using SetPlayerbotMgr.
+        EquipmentSetContainer& GetEquipmentSets() { return _equipmentSets; }
+        void SetPlayerbotAI(PlayerbotAI* ai) { m_playerbotAI=ai; }
+        PlayerbotAI* GetPlayerbotAI() { return m_playerbotAI; }
+        void SetPlayerbotMgr(PlayerbotMgr* mgr) { m_playerbotMgr=mgr; }
+        PlayerbotMgr* GetPlayerbotMgr() { return m_playerbotMgr; }
+        void SetBotDeathTimer() { m_deathTimer = 0; }
+        PlayerTalentMap& GetTalentMap(uint8 spec) { return *m_talents[spec]; }
+        bool MinimalLoadFromDB( QueryResult result, uint32 guid );
 
         std::string GetMapAreaAndZoneString() const;
         std::string GetCoordsMapAreaAndZoneString() const;
@@ -2405,6 +2420,10 @@ class TC_GAME_API Player : public Unit, public GridObject<Player>
         uint8 m_fishingSteps;
 
         bool m_needsZoneUpdate;
+
+        // Lord PlayerBot configed
+        PlayerbotAI * m_playerbotAI;
+        PlayerbotMgr * m_playerbotMgr;
 
     private:
         // internal common parts for CanStore/StoreItem functions
