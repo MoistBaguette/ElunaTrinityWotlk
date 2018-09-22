@@ -22,8 +22,8 @@ list<ObjectGuid> AttackersValue::Calculate()
     for (set<Unit*>::iterator i = targets.begin(); i != targets.end(); i++)
         result.push_back((*i)->GetGUID());
 
-    if (bot->duel && bot->duel->opponent)
-        result.push_back(bot->duel->opponent->GetGUID());
+    if (bot->duel && bot->duel->Opponent)
+        result.push_back(bot->duel->Opponent->GetGUID());
 
     return result;
 }
@@ -117,7 +117,7 @@ bool AttackersValue::hasRealThreat(Unit *attacker)
         attacker->IsInWorld() &&
         attacker->IsAlive() &&
         !attacker->IsPolymorphed() &&
-        !attacker->isInRoots() &&
+        !attacker->IsRooted() &&
         !attacker->IsFriendlyTo(bot) &&
         (attacker->GetThreatManager().GetCurrentVictim() || dynamic_cast<Player*>(attacker));
 }
