@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008-2018 TrinityCore <https://www.trinitycore.org/>
+ * Copyright (C) 2008-2019 TrinityCore <https://www.trinitycore.org/>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -747,11 +747,12 @@ class spell_xt002_gravity_bomb_damage : public SpellScript
 {
     PrepareSpellScript(spell_xt002_gravity_bomb_damage);
 
-    void HandleScript(SpellEffIndex /*eff*/)
+    void HandleScript(SpellEffIndex /*effIndex*/)
     {
-        Unit* caster = GetCaster();
         if (GetHitDamage() >= int32(GetHitUnit()->GetHealth()))
-            caster->GetAI()->SetData(DATA_GRAVITY_BOMB_CASUALTY, 1);
+            if (InstanceScript* instance = GetCaster()->GetInstanceScript())
+                if (Creature* xt002 = instance->GetCreature(BOSS_XT002))
+                    xt002->AI()->SetData(DATA_GRAVITY_BOMB_CASUALTY, 1);
     }
 
     void Register() override
